@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import axios from "axios"
+import {api} from "./utils/api";
 
 function App() {
   const [todos,setTodos] = useState([]);
@@ -8,20 +8,20 @@ function App() {
   const addTodo = (e) => {
     e.preventDefault()
     if(todo.trim() !== ""){
-      axios.post("http://localhost:5000/todos",{todoName:todo})
+      api.post("/todos",{todoName:todo})
           .then(res => console.log(res))
           .catch(err => console.log(err))
     }
   }
 
   const deleteTodo = (id) => {
-    axios.delete(`http://localhost:5000/todos/${id}`)
+    api.delete(`/todos/${id}`)
         .then(res => console.log(res))
         .catch(err => console.log(err))
   }
 
   useEffect(() => {
-    axios.get("http://localhost:5000/todos")
+    api.get("/todos")
         .then(res => setTodos(res.data))
         .catch(err => console.log(err))
   })
